@@ -15,39 +15,33 @@ using ll = long long;
 const int mod = 1e9 + 7;
 const int MAXN = 100005;
 
-int check(string p, string s)
+int check(string s, string p)
 {
-    int idx_p = 0, idx_s = 0;
-    while (idx_p < p.size() - 1 && idx_s < s.size() - 1)
+    int i = 0, j = 0;
+    while (i < s.size() && j < p.size())
     {
-        if (p[idx_p] == s[idx_s])
-        {
-            if (p[idx_p + 1] != p[idx_p] && p[idx_p] == s[idx_s + 1])
-            {
-                idx_p += 1;
-                idx_s += 2;
-            }
-            else if (p[idx_p + 1] == p[idx_p] && p[idx_p] == s[idx_s + 1])
-            {
-                idx_p += 1;
-                idx_s += 1;
-            }
-        }
-        else
-        {
+        if (s[i] != p[j])
             return 0;
+        int curr = s[i];
+        int cnt_s = 0;
+        while (i < s.size() && s[i] == curr)
+        {
+            ++i;
+            ++cnt_s;
         }
-    }
-    if (idx_s == s.size() - 2)
-    {
-        if (p[p.size() - 1] != s[s.size() - 1] || p[p.size() - 1] != s[s.size() - 2])
+        int cnt_p = 0;
+        while (j < p.size() && p[j] == curr)
+        {
+            ++j;
+            ++cnt_p;
+        }
+        if (cnt_p < cnt_s || cnt_p > 2 * cnt_s)
             return 0;
     }
-    else if (idx_s == s.size() - 1)
-    {
-        if ()
-    }
-    return 1;
+    if (i == s.size() && j == p.size())
+        return 1;
+    else
+        return 0;
 }
 
 int main()
@@ -57,12 +51,10 @@ int main()
     cin >> t;
     while (t--)
     {
-        string p, s;
-        cin >> p >> s;
-        if (check(p, s))
-        {
+        string s, p;
+        cin >> s >> p;
+        if (check(s, p))
             cout << "YES\n";
-        }
         else
             cout << "NO\n";
     }
