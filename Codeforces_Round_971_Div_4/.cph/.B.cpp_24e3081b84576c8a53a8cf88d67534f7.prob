@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\New folder (2)\\Codeforeces\\Codeforces_Round_971_Div_4\\B.cpp","tests":[{"id":1745320718044,"input":"3\n4\n#...\n.#..\n..#.\n...#\n2\n.#..\n.#..\n1\n...#\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\New folder (2)\\Codeforeces\\Codeforces_Round_971_Div_4\\B.cpp","group":"local","local":true}

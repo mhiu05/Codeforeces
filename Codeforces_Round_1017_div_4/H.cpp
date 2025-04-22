@@ -13,38 +13,83 @@ void faster()
 using ll = long long;
 
 const int mod = 1e9 + 7;
-const int MAXN = 100005;
+const int MAXN = 1e5;
+
+vector<vector<int>> divisor(MAXN + 1);
+
+void sieve()
+{
+    for (int i = 2; i <= MAXN; ++i)
+    {
+        for (int j = 1; j <= sqrt(i); ++j)
+        {
+            if (i % j == 0)
+            {
+                divisor[i].push_back(j);
+                if (j * j != i)
+                {
+                    divisor[i].push_back(i / j);
+                }
+            }
+        }
+    }
+}
 
 int main()
 {
     faster();
+    sieve();
     int t;
     cin >> t;
     while (t--)
     {
         ll n, q;
         cin >> n >> q;
-        ll a[n + 1];
+        vector<ll> v(n + 1);
+        map<ll, vector<ll>> mp;
+
         for (int i = 1; i <= n; ++i)
-            cin >> a[i];
+        {
+            cin >> v[i];
+            mp[v[i]].push_back(i);
+        }
+
         while (q--)
         {
             ll k, l, r;
             cin >> k >> l >> r;
-            ll ans = 0;
-            for (int i = l; i <= r; ++i)
+            vector<int> index;
+            for (int x : divisor[k])
             {
-                while (k % a[i] == 0)
+                if (x == 1)
+                    continue;
+                if (!mp[x].empty())
                 {
-                    k /= a[i];
+                    auto it = lower_bound(mp[x].begin(), mp[x].end(), l);
+                    if (it != mp[x].end())
+                    {
+                        if (*it <= r)
+                        {
+                            index.push_back(*it);
+                        }
+                    }
                 }
-                if (k == 1)
-                {
-                    ans += r - i + 1;
-                    break;
-                }
-                ans += k;
             }
+            sort(index.begin(), index.end());
+            ll ans = 0;
+            for (int i = 0; i < index.size() - 1; ++i)
+            {
+                while (k % v[index[i]] == 0)
+                {
+                    k /= v[index[i]];
+                }
+                ans += k * (index[i + 1] - index[i]);
+            }
+            while (k % v[index[index.size() - 1]] == 0)
+            {
+                k /= v[index[index.size() - 1]];
+            }
+            ans += k * (r - index.back() + 1);
             cout << ans << endl;
         }
     }

@@ -28,33 +28,45 @@ void solution_1(deque<ll> &dqNor, deque<ll> &dqRev, ll &sum, ll &score, ll &rsco
     ll sizeRev = dqRev.size();
     ll b = dqRev.front();
     dqRev.pop_front();
-    rscore -= b;
+    dqRev.push_back(b);
+    rscore -= sum;
+    rscore += sizeRev * b;
 }
 
-void solution_2(deque<ll> &dqNor, deque<ll> &dqRev, ll &sum, ll &score, ll &rscore)
+void solution_2(deque<ll> &dqNor, deque<ll> &dqRev, ll &score, ll &rscore)
 {
+    swap(dqNor, dqRev);
+    swap(score, rscore);
 }
 
 void solution_3(deque<ll> &dqNor, deque<ll> &dqRev, ll &sum, ll &score, ll &rscore)
 {
+    ll k;
+    cin >> k;
+    dqNor.push_back(k);
+    dqRev.push_front(k);
+    sum += k;
+    score += dqNor.size() * k;
+    rscore += sum;
 }
 
 void solve()
 {
-    deque<ll> dqNor, Rev;
+    deque<ll> dqNor, dqRev;
+    ll sum = 0, score = 0, rscore = 0;
     int q;
     cin >> q;
     while (q--)
     {
         int s;
         cin >> s;
-        ll sum = 0, score = 0, rscore = 0;
         if (s == 1)
             solution_1(dqNor, dqRev, sum, score, rscore);
         else if (s == 2)
-            solution_2(dqNor, dqRev, sum, score, rscore);
+            solution_2(dqNor, dqRev, score, rscore);
         else
             solution_3(dqNor, dqRev, sum, score, rscore);
+        cout << score << endl;
     }
 }
 
