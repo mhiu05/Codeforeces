@@ -77,19 +77,17 @@ int main()
             }
             sort(index.begin(), index.end());
             ll ans = 0;
-            for (int i = 0; i < index.size() - 1; ++i)
+            int currPos = l;
+            for (int i = 0; i < index.size(); ++i)
             {
+                ans += k * (index[i] - currPos);
                 while (k % v[index[i]] == 0)
                 {
                     k /= v[index[i]];
                 }
-                ans += k * (index[i + 1] - index[i]);
+                currPos = index[i];
             }
-            while (k % v[index[index.size() - 1]] == 0)
-            {
-                k /= v[index[index.size() - 1]];
-            }
-            ans += k * (r - index.back() + 1);
+            ans += k * (r - currPos + 1);
             cout << ans << endl;
         }
     }
